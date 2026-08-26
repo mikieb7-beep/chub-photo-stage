@@ -186,7 +186,45 @@ this.myInternalState['photoRequested'] = photoRequested;
         };
     }
 
-    async afterResponse(botMessage: Message): Promise<Partial<StageResponse<ChatStateType, MessageStateType>>> {
+    async afterResponse(botMessage:if (this.myInternalState['photoRequested']) {
+    try {
+        const imagePrompt = `
+${CHARACTER_VISUAL_PROFILE}
+
+CURRENT PHOTO:
+${content}
+
+Generate a believable candid photograph matching the character's
+current clothing, expression, pose, location, mood, and lighting.
+
+Keep the exact same woman and established physical appearance.
+Photorealistic smartphone photo.
+Natural skin texture.
+Realistic hands and anatomy.
+Natural proportions.
+No illustration.
+No anime.
+No CGI.
+No text or watermark.
+`;
+
+        const generatedImage = await this.generator.makeImage({
+            prompt: imagePrompt,
+            aspect_ratio: '2:3' as any,
+            remove_background: false
+        });
+
+        if (generatedImage?.url) {
+            this.myInternalState['generatedImageUrl'] = generatedImage.url;
+        }
+
+        this.myInternalState['photoRequested'] = false;
+
+    } catch (error) {
+        console.error('Photo generation failed:', error);
+        this.myInternalState['photoRequested'] = false;
+    }
+    } Message): Promise<Partial<StageResponse<ChatStateType, MessageStateType>>> {
         /***
          This is called immediately after a response from the LLM.
          ***/
