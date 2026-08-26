@@ -146,7 +146,23 @@ export class Stage extends StageBase<InitStateType, ChatStateType, MessageStateT
               in this chat, but NOT their Chub ID. ***/
             isBot             /*** @type: boolean
              @description Whether this is itself from another bot, ex. in a group chat. ***/
-        } = userMessage;
+        } = userMessage;const photoRequestText = (content ?? '').toLowerCase();
+
+const photoRequested =
+    photoRequestText.includes('send me a pic') ||
+    photoRequestText.includes('send me a picture') ||
+    photoRequestText.includes('send me a photo') ||
+    photoRequestText.includes('send a pic') ||
+    photoRequestText.includes('send a picture') ||
+    photoRequestText.includes('take a selfie') ||
+    photoRequestText.includes('send me a selfie') ||
+    photoRequestText.includes('show me a selfie') ||
+    photoRequestText.includes('show me what you look like') ||
+    photoRequestText.includes("show me what you're wearing") ||
+    photoRequestText.includes('show me what you are wearing') ||
+    photoRequestText.includes('let me see you');
+
+this.myInternalState['photoRequested'] = photoRequested;
         return {
             /*** @type null | string @description A string to add to the
              end of the final prompt sent to the LLM,
@@ -187,7 +203,12 @@ export class Stage extends StageBase<InitStateType, ChatStateType, MessageStateT
             /*** @type null | string @description A string to add to the
              end of the final prompt sent to the LLM,
              but that isn't persisted. ***/
-            stageDirections: null,
+            stageDirections: photoRequested
+    ? `The user has requested a photograph of the character.
+       Respond naturally to the request and describe what the character
+       is currently wearing, her pose, expression, location, and lighting.
+       Keep these details consistent with the current conversation.`
+    : null,
             /*** @type MessageStateType | null @description the new state after the botMessage. ***/
             messageState: {'someKey': this.myInternalState['someKey']},
             /*** @type null | string @description If not null, the bot's response itself is replaced
