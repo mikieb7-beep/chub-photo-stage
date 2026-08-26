@@ -262,6 +262,34 @@ No text or watermark.
 
 
     render(): ReactElement {
+    const imageUrl = this.myInternalState['generatedImageUrl'];
+
+    if (!imageUrl) {
+        return <div style={{display: 'none'}} />;
+    }
+
+    return (
+        <div style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '12px',
+            boxSizing: 'border-box'
+        }}>
+            <img
+                src={imageUrl}
+                alt="Generated character photo"
+                style={{
+                    width: '100%',
+                    maxWidth: '500px',
+                    height: 'auto',
+                    borderRadius: '14px',
+                    objectFit: 'cover'
+                }}
+            />
+        </div>
+    );
+    }
         /***
          There should be no "work" done here. Just returning the React element to display.
          If you're unfamiliar with React and prefer video, I've heard good things about
