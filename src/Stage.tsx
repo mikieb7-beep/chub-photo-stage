@@ -1,7 +1,34 @@
 import {ReactElement} from "react";
 import {StageBase, StageResponse, InitialData, Message} from "@chub-ai/stages-ts";
 import {LoadResponse} from "@chub-ai/stages-ts/dist/types/load";
+const CHARACTER_VISUAL_PROFILE = `
+Photorealistic adult woman, mid-20s appearance.
+Warm medium-tan complexion with realistic natural skin texture.
+Long, thick, glossy black hair, mostly straight with a subtle natural wave,
+deep side part with softly styled baby hairs.
+Dark brown almond-shaped eyes.
+Thick dark precisely shaped eyebrows.
+Long eyelashes with subtle black winged eyeliner.
+Oval-to-heart-shaped face with defined cheekbones and a softly sculpted jawline.
+Slim straight nose with a softly rounded tip.
+Full natural pink lips with a defined cupid's bow.
 
+Curvy hourglass figure with measurements approximately 33C-26-40.
+Narrow defined waist, proportionately fuller hips and glutes,
+natural feminine proportions and realistic anatomy.
+
+Her identity must remain consistent in every image:
+same facial structure, complexion, eyes, eyebrows, nose, lips,
+hairline, hair color, body shape and proportions.
+
+Photography style:
+extremely photorealistic modern smartphone photography,
+natural skin pores and texture, realistic hair strands,
+natural lighting, believable shadows, realistic anatomy,
+candid personal-photo appearance, subtle depth of field,
+no illustration, no anime, no CGI, no plastic skin,
+no excessive beauty filtering.
+`;
 /***
  The type that this stage persists message-level state in.
  This is primarily for readability, and not enforced.
